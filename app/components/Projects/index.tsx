@@ -5,7 +5,7 @@ import ScrollContainer from './ScrollContainer';
 const projects = [
   {
     name: "Personal website",
-    url: "https://personal-website-thebarda.vercel.app/",
+    url: "https://personal-website-thebarda.vercel.app/projects",
     color: "linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%)",
     stack: ['Remix', "React", 'Ramda', 'Material UI', 'ESLint', 'Vercel', 'Checkly'],
   },
@@ -28,7 +28,7 @@ const Projects: FC = () => {
           displayAt: index / 2,
           Content: ({ isVisible }) => (
             <Zoom in={isVisible} >
-              <Box sx={{ display: 'grid', alignItems: 'center', justifyItems: 'center', height: '100%', color: 'common.black' }}>
+              <Box sx={{ display: 'grid', alignItems: 'center', justifyItems: 'center', height: '100%', color: 'common.black', zIndex: 9999 }}>
                 <Box sx={{ display: 'grid', justifyItems: 'center', rowGap: 3 }}>
                   <Typography variant="h5" fontWeight="bold">{name}</Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'row', columnGap: 3 }}>
