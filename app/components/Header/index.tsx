@@ -4,7 +4,7 @@ import { Link } from '@remix-run/react';
 
 const WebLink: FC<{ to: string; content: string; id: string; }> = ({ to, content, id }) => (
   <Link to={to} style={{ textDecoration: 'none' }}>
-    <Typography component="span" variant="h6" sx={{ color: 'text.primary' }} id={id}>{content}</Typography>
+    <Typography component="span" variant="h6" sx={{ color: 'common.white' }} id={id}>{content}</Typography>
   </Link>
 )
 
