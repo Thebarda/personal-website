@@ -13,7 +13,7 @@ const Header: FC = () => {
     <AppBar position="fixed" sx={{ backgroundColor: 'primary.main' }}>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
-          <WebLink to="/" content="Tom Darneix" id="Tom Darneix" />
+          <WebLink to="/" content="Tom Darneix" id="home" />
         </Box>
         <WebLink to="/projects" content="Projects" id="projects" />
       </Toolbar>
