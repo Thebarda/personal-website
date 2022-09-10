@@ -7,6 +7,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import Header from "./components/Header";
+import ThemeProvider from "./components/ThemeProvider";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -22,7 +24,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <ThemeProvider>
+          <>
+            <Header />
+            <Outlet />
+          </>
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

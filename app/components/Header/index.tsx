@@ -1,23 +1,21 @@
 import type { FC } from 'react';
-import { ButtonGroup, Button, AppBar, Toolbar, Typography } from '@mui/material';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import ContrastIcon from '@mui/icons-material/Contrast';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useTheme } from './useTheme';
-import { ThemeMode } from '../ThemeProvider/models';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
+import { Link } from '@remix-run/react';
+
+const WebLink: FC<{ to: string; content: string }> = ({ to, content }) => (
+  <Link to={to} style={{ textDecoration: 'none' }}>
+    <Typography component="span" variant="h6" sx={{ color: 'text.primary' }}>{content}</Typography>
+  </Link>
+)
 
 const Header: FC = () => {
-  const { changeTheme, isChangingTheme, getButtonStyle } = useTheme();
-
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: 'primary.main' }}>
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: '1' }}>Tom Darneix</Typography>
-        <ButtonGroup color="inherit" disabled={isChangingTheme}>
-          <Button startIcon={<WbSunnyIcon />} sx={getButtonStyle(ThemeMode.Light)} onClick={changeTheme(ThemeMode.Light)}>Light</Button>
-          <Button startIcon={<ContrastIcon />} sx={getButtonStyle(ThemeMode.System)} onClick={changeTheme(ThemeMode.System)}>System</Button>
-          <Button startIcon={<DarkModeIcon />} sx={getButtonStyle(ThemeMode.Dark)} onClick={changeTheme(ThemeMode.Dark)}>Dark</Button>
-        </ButtonGroup>
+        <Box sx={{ flexGrow: 1 }}>
+          <WebLink to="/" content="Tom Darneix" />
+        </Box>
+        <WebLink to="/projects" content="Projects" />
       </Toolbar>
     </AppBar>
   );
