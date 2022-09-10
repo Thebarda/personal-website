@@ -2,14 +2,16 @@ import type { FC } from 'react';
 import { useEffect, useRef} from 'react';
 import { useState } from 'react';
 import { Box } from '@mui/material';
-import { equals, find, gte, isNil, pipe, prop, reverse, sortBy } from 'ramda';
+import { equals, find, gte, isNil, pipe, prop, propEq, reverse, sortBy } from 'ramda';
 import type { SxProps, Theme } from '@mui/system';
 
-interface Content {
+export interface Content {
   id: string;
   displayAt: number;
   Content: FC<{ isVisible: boolean }>;
   sx?: SxProps<Theme>;
+  onClick?: (content: Content) => void;
+  url: string;
 }
 
 const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({ height, contents }) => {
@@ -17,9 +19,6 @@ const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({ hei
   const scrollElementRef = useRef<HTMLDivElement | null>(null);
 
   const scroll = ({ totalHeight, scrollHeight }): void => {
-    // const totalHeight = event.currentTarget.offsetHeight;
-    // const scrollHeight = event.currentTarget.scrollTop;
-
     const scrollPosition = scrollHeight / totalHeight;
 
     const contentIds = pipe(sortBy(prop('displayAt')), reverse<Content>)(contents);
@@ -34,8 +33,20 @@ const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({ hei
       return;
     }
 
-    scroll({ totalHeight: scrollElementRef.current.offsetHeight, scrollHeight: scrollElementRef.current.scrollTop })
+    scroll({ totalHeight: scrollElementRef.current.offsetHeight, scrollHeight: scrollElementRef.current.scrollTop });
   }, [scrollElementRef.current]);
+
+  const click = () => {
+    if (isNil(displayed)) {
+      return;
+    }
+
+    
+    const displayedContent = find(propEq('id', displayed), contents) as Content;
+    console.log(displayedContent)
+
+    displayedContent.onClick?.(displayedContent);
+  }
 
   return (
     <div>
@@ -46,7 +57,7 @@ const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({ hei
           </Box>
         </Box>
       ))}
-      <Box sx={{ width: '100%', height: '100vh', overflowY: 'scroll', position: 'relative' }} onScroll={({ currentTarget}) => scroll({ totalHeight: currentTarget.offsetHeight, scrollHeight: currentTarget.scrollTop })} ref={scrollElementRef}>
+      <Box sx={{ width: '100%', height: '100vh', overflowY: 'scroll', position: 'relative', cursor: 'pointer' }} onClick={click} onScroll={({ currentTarget}) => scroll({ totalHeight: currentTarget.offsetHeight, scrollHeight: currentTarget.scrollTop })} ref={scrollElementRef}>
         <Box sx={{ width: '100%', height }} />
       </Box>
     </div>
