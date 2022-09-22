@@ -9,9 +9,9 @@ import {
 } from "@remix-run/react";
 import Header from "./components/Header";
 import ThemeProvider from "./components/ThemeProvider";
-import guess from './assets/guess.png';
-import personal from './assets/personal.png';
-import thebardabot from './assets/thebardabot.png';
+import guess from "./assets/guess.png";
+import personal from "./assets/personal.png";
+import thebardabot from "./assets/thebardabot.png";
 import type { LinksFunction } from "@remix-run/react/dist/routeModules";
 
 export const meta: MetaFunction = () => ({
@@ -21,7 +21,11 @@ export const meta: MetaFunction = () => ({
 });
 
 export const links: LinksFunction = () => {
-  return [{ rel: "preload", href: guess, as: 'image' }, { rel: "preload", href: personal, as: 'image' }, { rel: "preload", href: thebardabot, as: 'image' }];
+  return [
+    { rel: "preload", href: guess, as: "image" },
+    { rel: "preload", href: personal, as: "image" },
+    { rel: "preload", href: thebardabot, as: "image" },
+  ];
 };
 
 export default function App() {
