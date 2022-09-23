@@ -10,9 +10,7 @@ const getSystemTheme = (matches: boolean): ThemeMode =>
   matches ? ThemeMode.Dark : ThemeMode.Light;
 
 export const useGetTheme = (): ThemeMode | null => {
-  const [muiTheme, setMuiTheme] = useState(
-    getSystemTheme(window.matchMedia("(prefers-color-scheme: dark)").matches)
-  );
+  const [muiTheme, setMuiTheme] = useState<ThemeMode | null>(null);
 
   const changeSystemTheme = useCallback((matches: boolean) => {
     setMuiTheme(getSystemTheme(matches));
@@ -20,6 +18,7 @@ export const useGetTheme = (): ThemeMode | null => {
 
   useLayoutEffect(() => {
     const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+    changeSystemTheme(darkThemeMq.matches);
     darkThemeMq.addEventListener("change", (event) =>
       changeSystemTheme(event.matches)
     );
