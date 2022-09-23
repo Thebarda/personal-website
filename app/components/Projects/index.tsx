@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemText,
   Zoom,
+  Button,
 } from "@mui/material";
 import type { FC } from "react";
 import ScrollContainer from "./ScrollContainer";
@@ -58,7 +59,6 @@ const Projects: FC = () => {
       contents={projects.map(({ name, color, url, stack, img }, index) => ({
         id: name,
         displayAt: index / 2,
-        url,
         Content: ({ isVisible }) => (
           <Zoom in={isVisible}>
             <Box
@@ -71,15 +71,28 @@ const Projects: FC = () => {
                 color: "common.black",
                 borderRadius: "8px",
               }}
-              onClick={() => {
-                window.open(url, "_blank", "noopener noreferrer");
-              }}
-              role="button"
             >
               <Box sx={{ display: "grid", justifyItems: "center", rowGap: 3 }}>
-                <Typography variant="h5" fontWeight="bold">
-                  {name}
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    columnGap: 2,
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="h5" fontWeight="bold">
+                    {name}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      window.open(url, "_blank", "noopener noreferrer");
+                    }}
+                  >
+                    Discover the project
+                  </Button>
+                </Box>
                 <Box
                   sx={{ display: "flex", flexDirection: "row", columnGap: 3 }}
                 >

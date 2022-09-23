@@ -2,17 +2,7 @@ import type { FC } from "react";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import {
-  equals,
-  find,
-  gte,
-  isNil,
-  pipe,
-  prop,
-  propEq,
-  reverse,
-  sortBy,
-} from "ramda";
+import { equals, find, gte, isNil, pipe, prop, reverse, sortBy } from "ramda";
 import type { SxProps, Theme } from "@mui/system";
 
 export interface Content {
@@ -20,19 +10,17 @@ export interface Content {
   displayAt: number;
   Content: FC<{ isVisible: boolean }>;
   sx?: SxProps<Theme>;
-  onClick?: (content: Content) => void;
-  url: string;
 }
 
-const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({
-  height,
-  contents,
-}) => {
+const ScrollContainer: FC<{
+  height: string;
+  contents: Array<Content>;
+  position?: string;
+}> = ({ height, contents, position = "fixed" }) => {
   const [displayed, setDisplayed] = useState<string | null>(null);
   const scrollElementRef = useRef<HTMLDivElement | null>(null);
 
   const scroll = (): void => {
-    console.log("heyyy");
     const totalHeight = scrollElementRef.current?.offsetHeight || 0;
     const scrollHeight = scrollElementRef.current?.scrollTop || 0;
     const scrollPosition = scrollHeight / totalHeight;
@@ -64,9 +52,21 @@ const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({
     };
   }, [scrollElementRef.current]);
 
+  const containerStyle = equals(position, "fixed")
+    ? {
+        top: "45%",
+        left: "50%",
+        transform: "translate(-50%, -100%)",
+      }
+    : {
+        top: "50%",
+        left: "50%",
+        transform: "translate(-35%, -100%)",
+      };
+
   return (
     <div
-      style={{ height: "100vh", overflowY: "scroll" }}
+      style={{ height: "calc(100vh - 64px)", overflowY: "scroll" }}
       ref={scrollElementRef}
     >
       <div style={{ height }}>
@@ -75,13 +75,11 @@ const ScrollContainer: FC<{ height: string; contents: Array<Content> }> = ({
             key={id}
             sx={{
               opacity: equals(displayed, id) ? 1 : 0,
-              position: "fixed",
+              position,
               width: "65vw",
               height: "200px",
-              top: "45%",
-              left: "50%",
-              transform: "translate(-50%, -100%)",
               zIndex: equals(displayed, id) ? 1 : 0,
+              ...containerStyle,
             }}
           >
             <Box sx={{ ...sx }}>

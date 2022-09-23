@@ -26,7 +26,10 @@ const Header: FC = () => {
         <Box sx={{ flexGrow: 1 }}>
           <WebLink to="/" content="Tom Darneix" id="home" />
         </Box>
-        <WebLink to="/projects" content="Projects" id="projects" />
+        <Box sx={{ display: "flex", columnGap: 2 }}>
+          <WebLink to="/" content="Home" id="home" />
+          <WebLink to="/projects" content="Projects" id="projects" />
+        </Box>
       </Toolbar>
     </AppBar>
   );
